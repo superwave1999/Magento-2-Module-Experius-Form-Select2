@@ -1,11 +1,9 @@
 <?php
 
-
 namespace Superwave1999\FormSelect2\Controller\Adminhtml\Ajax;
 
 class Search extends \Magento\Backend\App\Action
 {
-
     protected $resultPageFactory;
 
     protected $jsonHelper;
@@ -23,8 +21,7 @@ class Search extends \Magento\Backend\App\Action
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\Json\Helper\Data $jsonHelper,
         \Superwave1999\FormSelect2\Model\Search $search
-    ){
-
+    ) {
         $this->resultPageFactory = $resultPageFactory;
         $this->jsonHelper = $jsonHelper;
         $this->search = $search;
@@ -40,24 +37,25 @@ class Search extends \Magento\Backend\App\Action
     public function execute()
     {
         try {
-
             $id = $this->getRequest()->getParam('id');
             $query = $this->getRequest()->getParam('q');
             $page = ($this->getRequest()->getParam('page')) ? $this->getRequest()->getParam('page') : 1;
 
-            if($this->getRequest()->getParam('search')){
+            if ($this->getRequest()->getParam('search')) {
                 $this->search = $this->_objectManager->create('Superwave1999\\FormSelect2\\Model\\Virtual\\' . $this->getRequest()->getParam('search'));
             }
 
-            if($query) {
-                $items = $this->search->searchCollection($query,$page);
+            $items = [];
+
+            if ($query) {
+                $items = $this->search->searchCollection($query, $page);
             }
 
-            if($id){
+            if ($id) {
                 $items = $this->search->loadInitialValue($id);
             }
 
-            if($query || $id){
+            if ($query || $id) {
                 $response = [
                     'query'=> $query,
                     'total_count' => count($items),
@@ -65,7 +63,7 @@ class Search extends \Magento\Backend\App\Action
                     'items'=> $items
                 ];
                 return $this->jsonResponse($response);
-            };
+            }
 
             return $this->jsonResponse([]);
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
@@ -78,6 +76,7 @@ class Search extends \Magento\Backend\App\Action
     /**
      * Create json response
      *
+     * @param string $response
      * @return \Magento\Framework\Controller\ResultInterface
      */
     public function jsonResponse($response = '')

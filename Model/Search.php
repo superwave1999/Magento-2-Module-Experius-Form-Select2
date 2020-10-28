@@ -1,11 +1,9 @@
 <?php
 
-
 namespace Superwave1999\FormSelect2\Model;
 
 class Search extends \Magento\Framework\Model\AbstractModel
 {
-
     protected $searchFields = ['firstname','lastname'];
 
     protected $modelClass = 'Magento\Customer\Model\Customer';
@@ -27,58 +25,63 @@ class Search extends \Magento\Framework\Model\AbstractModel
     ) {
         $this->objectManager = $objectManager;
 
-        if(isset($searchData['modelClass'])){
+        if (isset($searchData['modelClass'])) {
             $this->modelClass = $searchData['modelClass'];
         }
 
-        if(isset($searchData['modelCollectionClass'])){
+        if (isset($searchData['modelCollectionClass'])) {
             $this->modelCollectionClass = $searchData['modelCollectionClass'];
         }
 
-        if(isset($searchData['searchFields'])){
+        if (isset($searchData['searchFields'])) {
             $this->searchFields = $searchData['searchFields'];
         }
 
-        if(isset($searchData['modelType'])){
+        if (isset($searchData['modelType'])) {
             $this->modelType = $searchData['modelType'];
         }
 
-        if(isset($searchData['modelKey'])){
+        if (isset($searchData['modelKey'])) {
             $this->modelKey = $searchData['modelKey'];
         }
 
-        if(isset($searchData['sortByAttribute'])){
+        if (isset($searchData['sortByAttribute'])) {
             $this->sortByAttribute = $searchData['sortByAttribute'];
         }
-
     }
 
-    public function setSearchFields($searchFields){
+    public function setSearchFields($searchFields)
+    {
         $this->searchFields = (array) $searchFields;
     }
 
-    public function setModelClass($class){
+    public function setModelClass($class)
+    {
         $this->modelClass = (string) $class;
     }
 
-    public function setModelType($searchFields){
+    public function setModelType($searchFields)
+    {
         $this->modelType = (string) $searchFields;
     }
 
-    public function setModelKey($modelKey){
+    public function setModelKey($modelKey)
+    {
         $this->modelKey = (string) $modelKey;
     }
 
-    private function getModel(){
+    private function getModel()
+    {
         return $this->objectManager->create($this->modelClass);
     }
 
-    public function getCollectionModel(){
+    public function getCollectionModel()
+    {
         return $this->objectManager->create($this->modelCollectionClass);
     }
 
-    public function searchCollection($query,$page){
-
+    public function searchCollection($query, $page)
+    {
         $collection = $this->getCollectionModel();
         $collection->addFieldToSelect('*');
         $searchFields = $this->searchFields;
@@ -91,8 +94,8 @@ class Search extends \Magento\Framework\Model\AbstractModel
             $eavFilters[] =['attribute'=>$searchField,'like'=>'%' . $query . '%'];
         }
 
-        if($this->modelType=='eav') {
-            $collection->addAttributeToFilter($eavFilters,null,'left');
+        if ($this->modelType=='eav') {
+            $collection->addAttributeToFilter($eavFilters, null, 'left');
         } else {
             if (count($searchFields) === 1) {
                 $searchFields = reset($searchFields);
@@ -103,41 +106,40 @@ class Search extends \Magento\Framework\Model\AbstractModel
             );
         }
 
-        if($page) {
+        if ($page) {
             $collection->setPageSize(31);
             $collection->setCurPage($page);
         }
 
-        if($this->sortByAttribute){
-            $collection->setOrder($this->sortByAttribute,'ASC');
+        if ($this->sortByAttribute) {
+            $collection->setOrder($this->sortByAttribute, 'ASC');
         }
 
         $items = [];
 
-        foreach($collection as $item){
+        foreach ($collection as $item) {
             $items[] = ['id'=>$item->getData($this->modelKey),'text'=>$this->getItemText($item)];
         }
 
         return $items;
-
     }
 
-    public function loadInitialValue($key){
-        $model = $this->getModel()->load($key,$this->modelKey);
+    public function loadInitialValue($key)
+    {
+        $model = $this->getModel()->load($key, $this->modelKey);
 
         $items[] = ['id'=>$model->getData($this->modelKey),'text'=>$this->getItemText($model)];
 
         return $items;
     }
 
-    private function getItemText($item){
+    private function getItemText($item)
+    {
         $fields = $this->searchFields;
         $text = '';
-        foreach($fields as $field){
+        foreach ($fields as $field) {
             $text .= $item->getData($field) . " ";
         }
         return $text;
     }
-
-
 }
