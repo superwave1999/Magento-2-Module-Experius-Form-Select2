@@ -38,8 +38,8 @@ Multiselect
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
                     </item>
-                    <item name="elementTmpl" xsi:type="string">Experius_FormSelect2/form/element/multiselect2</item>
-                    <item name="component" xsi:type="string">Experius_FormSelect2/js/form/element/multiselect2</item>
+                    <item name="elementTmpl" xsi:type="string">Superwave1999_FormSelect2/form/element/multiselect2</item>
+                    <item name="component" xsi:type="string">Superwave1999_FormSelect2/js/form/element/multiselect2</item>
                     <item name="select2" xsi:type="array">
                         <item name="tags" xsi:type="string">true</item>
                     </item>
@@ -69,8 +69,8 @@ Select
                      <item name="validation" xsi:type="array">
                          <item name="required-entry" xsi:type="boolean">true</item>
                      </item>
-                     <item name="elementTmpl" xsi:type="string">Experius_FormSelect2/form/element/select2</item>
-                     <item name="component" xsi:type="string">Experius_FormSelect2/js/form/element/select2</item>
+                     <item name="elementTmpl" xsi:type="string">Superwave1999_FormSelect2/form/element/select2</item>
+                     <item name="component" xsi:type="string">Superwave1999_FormSelect2/js/form/element/select2</item>
                      <item name="select2" xsi:type="array">
                          <item name="maximumSelectionLength" xsi:type="string">1</item>
                          <item name="tags" xsi:type="string">true</item>
@@ -98,7 +98,7 @@ Ajax Search Select
 Ajax Virtual Search Model Example (di.xml)
 
 ```xml
-  <virtualType name="Experius\FormSelect2\Model\Virtual\ProductSearch" type="Experius\FormSelect2\Model\Search">
+  <virtualType name="Superwave1999\FormSelect2\Model\Virtual\ProductSearch" type="Superwave1999\FormSelect2\Model\Search">
          <arguments>
              <argument name="searchData" xsi:type="array">
                  <item name="modelCollectionClass" xsi:type="string">Magento\Catalog\Model\ResourceModel\Product\Collection</item>
