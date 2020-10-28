@@ -80,6 +80,7 @@ class Search extends \Magento\Framework\Model\AbstractModel
     public function searchCollection($query,$page){
 
         $collection = $this->getCollectionModel();
+        $collection->addFieldToSelect('*');
         $searchFields = $this->searchFields;
 
         $conditions = [];
@@ -93,11 +94,12 @@ class Search extends \Magento\Framework\Model\AbstractModel
         if($this->modelType=='eav') {
             $collection->addAttributeToFilter($eavFilters,null,'left');
         } else {
+            if (count($searchFields) === 1) {
+                $searchFields = reset($searchFields);
+            }
             $collection->addFieldToFilter(
                 $searchFields,
-                [
-                    $conditions
-                ]
+                $conditions
             );
         }
 
@@ -109,6 +111,8 @@ class Search extends \Magento\Framework\Model\AbstractModel
         if($this->sortByAttribute){
             $collection->setOrder($this->sortByAttribute,'ASC');
         }
+
+        $items = [];
 
         foreach($collection as $item){
             $items[] = ['id'=>$item->getData($this->modelKey),'text'=>$this->getItemText($item)];

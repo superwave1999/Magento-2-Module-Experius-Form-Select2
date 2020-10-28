@@ -12,6 +12,23 @@ define([
 ], function (_, registry, Abstract, ko, $, select2) {
     'use strict';
 
+    const adminPath = '/' + window.location.pathname.split('/')[1];
+
+    /**
+     * Build URL to query collections.
+     * @param url
+     * @param search
+     * @returns {*}
+     */
+    function buildUrl(url, search) {
+        var searchType = (typeof search === 'undefined') ? '' : '/search/' + search;
+        const fullUrl = adminPath + '/formselect2/ajax/search' + searchType;
+        if (url) {
+            const fullUrl = adminPath + url + searchType;
+        }
+        return fullUrl;
+    }
+
     ko.bindingHandlers.select2 = {
         init: function(element, valueAccessor, allBindings, viewModel, bindingContext){
             var $element = $(element);
@@ -46,11 +63,17 @@ define([
                     minimumInputLength: 1,
                 }
 
-                var searchType = (typeof options.ajax.search === 'undefined') ? '' : '/search/' + options.ajax.search;
+                ajaxOptions.ajax.url = buildUrl(options.ajax.url, options.ajax.search);
 
-                ajaxOptions.ajax.url = options.ajax.url + searchType;
                 options = $.extend(options,ajaxOptions);
 
+            }
+
+            if (options.multiple) {
+                $element.attr('multiple', 'multiple');
+                $element.addClass("admin__control-multiselect")
+            } else {
+                $element.addClass("admin__control-select")
             }
 
             $element.select2(options);
@@ -72,6 +95,10 @@ define([
             select2: {}
         },
 
+        /**
+         * Observe changes on element.
+         * @returns {*}
+         */
         initObservable: function () {
             this._super();
 
@@ -80,6 +107,11 @@ define([
             return this;
         },
 
+        /**
+         * Format data supplied by HTML select.
+         * @param value
+         * @returns {*}
+         */
         normalizeData: function (value) {
 
             this.getCurrentValue(value);
@@ -87,12 +119,18 @@ define([
             return value;
         },
 
+        /**
+         * Get current selected item.
+         * @param value
+         */
         getCurrentValue: function(value){
 
             if(value && this.select2().ajax) {
                 var self = this;
 
-                $.post(this.select2().ajax.url, { id: value, form_key: window.FORM_KEY},function (data) {
+                const url = buildUrl(this.select2().ajax.url, this.select2().ajax.search);
+
+                $.post(url, { id: value, form_key: window.FORM_KEY},function (data) {
                     self.addCurrentValueToOptions(data.items, value);
                 });
             }
@@ -136,7 +174,7 @@ define([
                 var items = [];
                 var values = $element.val();
 
-                if(values) {
+                if(Array.isArray(values)) {
                     $.each(values, function(index,value) {
                         var label = $element.find("option[value="+value+"]").text();
                         items.push({'text':label,'id':value})
