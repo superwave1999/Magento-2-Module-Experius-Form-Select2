@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Experius\FormSelect2\Controller\Adminhtml\Ajax;
+namespace Superwave1999\FormSelect2\Controller\Adminhtml\Ajax;
 
 class Search extends \Magento\Backend\App\Action
 {
@@ -22,7 +22,7 @@ class Search extends \Magento\Backend\App\Action
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\Json\Helper\Data $jsonHelper,
-        \Experius\FormSelect2\Model\Search $search
+        \Superwave1999\FormSelect2\Model\Search $search
     ){
 
         $this->resultPageFactory = $resultPageFactory;
@@ -46,7 +46,7 @@ class Search extends \Magento\Backend\App\Action
             $page = ($this->getRequest()->getParam('page')) ? $this->getRequest()->getParam('page') : 1;
 
             if($this->getRequest()->getParam('search')){
-                $this->search = $this->_objectManager->create('Experius\\FormSelect2\\Model\\Virtual\\' . $this->getRequest()->getParam('search'));
+                $this->search = $this->_objectManager->create('Superwave1999\\FormSelect2\\Model\\Virtual\\' . $this->getRequest()->getParam('search'));
             }
 
             if($query) {

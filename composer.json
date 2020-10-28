@@ -8,7 +8,7 @@
             "registration.php"
         ],
         "psr-4": {
-            "Experius\\FormSelect2\\": ""
+            "Superwave1999\\FormSelect2\\": ""
         }
     }
 }
