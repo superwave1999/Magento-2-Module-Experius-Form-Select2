@@ -2,7 +2,19 @@
     "name": "superwave1999/module-formselect2",
     "description": "",
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "magento/project-community-edition": "*"
+    },
+    "type": "magento2-module",
+    "version": "1.0.8",
+    "extra": {
+        "map": [
+            [
+                "*",
+                "Superwave1999/FormSelect2/"
+            ]
+        ]
+    },
     "autoload": {
         "files": [
             "registration.php"

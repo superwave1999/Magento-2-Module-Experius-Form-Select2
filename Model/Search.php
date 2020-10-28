@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Superwave1999\FormSelect2\Model;
+namespace Experius\FormSelect2\Model;
 
 class Search extends \Magento\Framework\Model\AbstractModel
 {
