@@ -1,17 +1,6 @@
 {
-    "name": "experius/module-formselect2",
+    "name": "superwave1999/module-formselect2",
     "description": "",
-    "license": "proprietary",
-    "authors": [
-        {
-            "email": "info@mage2gen.com",
-            "name": "Mage2Gen"
-        },
-        {
-            "email": "derrick@experius.nl",
-            "name": "Derrick Heesbeen"
-        }
-    ],
     "minimum-stability": "dev",
     "require": {},
     "autoload": {
