@@ -18,6 +18,16 @@ Example Options
      <item name="allowClear" xsi:type="string"">true</item>
 </item>
  ```
+ 
+New Additions
+
+If you want a simple dropdown but with ajax search:
+  ```xml
+<item name="select2" xsi:type="array">
+     <item name="multiple" xsi:type="boolean">false</item>
+</item>
+ ```
+ 
 
 Multiselect 
  
